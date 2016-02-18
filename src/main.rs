@@ -33,12 +33,6 @@ fn main() {
   println!("HOST: {:?}", host);
 
   let mut router = Router::new();
-  /*router
-    .get("/", |req: &mut Request| {
-      let res = Static::new(Path::new("res/index.html")).handle(req);
-      println!("REQ: {:?} => RES: {:?}", req, res);
-      res
-    });*/
 
   let mut mount = Mount::new();
   mount

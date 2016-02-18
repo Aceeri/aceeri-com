@@ -12,32 +12,36 @@ a {
 }
 
 #banner #icon {
+  position: relative;
   display: block;
+  top: calc(50% - 50px);
   margin: auto;
-  max-width: 5em;
+  max-width: 100px;
 }
 
 #banner {
   position: fixed;
+  overflow: hidden;
   background-color: #424F5A;
-  background-image: url(http://i.imgur.com/zCUmNQx.png);
-  height: 5em;
+  //background-image: url(http://i.imgur.com/zCUmNQx.png);
+  height: 8em;
   border-bottom: solid 1px #343F48;
   margin: 0em auto;
-  max-width: 10em;
-  min-width: 10em;
+  max-width: 12em;
+  min-width: 12em;
   padding: 0em;
 }
 
 #nav {
   position: fixed;
-  //background-color: #424F5A;
-  background-color: #3C4851;
-  background-image: url(http://i.imgur.com/zCUmNQx.png);
+  overflow: hidden;
+  background-color: #424F5A;
+  //background-color: #3C4851;
+  //background-image: url(http://i.imgur.com/zCUmNQx.png);
   border-color: #FFFFFF;
-  margin: 5em auto;
-  max-width: 10em;
-  min-width: 10em;
+  margin: 8em auto;
+  max-width: 12em;
+  min-width: 12em;
   height: 100%;
   padding: 0em 0em;
   list-style: none;
@@ -48,12 +52,10 @@ a {
 }
 
 #nav li a {
-  min-width: 8em;
-  max-width: 8em;
+  width: 10em;
   padding: 0em 1em 0em;
   display: inline-block;
   height: inherit;
-  
   line-height: 2em;
   vertical-align: middle;
 }
@@ -69,11 +71,12 @@ a {
 
 main {
   position: relative;
+  overflow: hidden;
   border: solid #DDDDDD;
   border-width: 0px 1px;
   height: 100%;
-  margin: 0em auto 0em 10em;
-  max-width: 50em;
+  margin: 0em auto 0em 12em;
+  max-width: calc(100% - 12em);
   padding: 1em;
   color: #424F5A;
 }
