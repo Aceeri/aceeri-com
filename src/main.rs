@@ -33,17 +33,17 @@ fn main() {
   println!("HOST: {:?}", host);
 
   let mut router = Router::new();
-  router
-    .get("/", Static::new(Path::new("res/index.html")));
+  /*router
+    .get("/", |req: &mut Request| {
+      let res = Static::new(Path::new("res/index.html")).handle(req);
+      println!("REQ: {:?} => RES: {:?}", req, res);
+      res
+    });*/
 
   let mut mount = Mount::new();
   mount
-    .mount("/", router)
-    .mount("/c/", |req: &mut Request| {
-      let res = Static::new(Path::new("res/")).handle(req);
-      println!("REQ: {:?} => RES: {:?}", req, res);
-      res
-    });
+    .mount("/", Static::new(Path::new("pages/")))
+    .mount("/c/", Static::new(Path::new("res/")));
 
   Iron::new(mount).http(host).unwrap();
 }
