@@ -31,7 +31,8 @@ a {
 
 #nav {
   position: fixed;
-  background-color: #424F5A;
+  //background-color: #424F5A;
+  background-color: #3C4851;
   background-image: url(http://i.imgur.com/zCUmNQx.png);
   border-color: #FFFFFF;
   margin: 5em auto;

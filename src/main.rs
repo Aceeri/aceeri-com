@@ -4,6 +4,8 @@ extern crate mount;
 extern crate staticfile;
 
 use std::path::Path;
+use std::fs::File;
+use std::io::Read;
 
 use iron::prelude::*;
 use iron::status;
@@ -17,6 +19,13 @@ use mount::Mount;
 use staticfile::Static;
 
 fn main() {
+  let mut ip = "".to_string();
+  let mut file = File::open("../host.txt").unwrap();
+  file.read_to_string(&mut ip);
+
+  let host: &str = &ip;
+  println!("HOST: {:?}", host);
+
   let mut router = Router::new();
   router
     .get("/", Static::new(Path::new("res/index.html")));
@@ -30,5 +39,5 @@ fn main() {
       res
     });
 
-  Iron::new(mount).http("localhost:3000").unwrap();
+  Iron::new(mount).http(host).unwrap();
 }
