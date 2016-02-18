@@ -4,6 +4,7 @@ version = "0.1.0"
 authors = ["Aceeri <conmcclusk@gmail.com>"]
 
 [dependencies]
+regex = "0.1.51"
 iron = "0.2.6"
 staticfile = "0.1.0"
 router = "0.1.0"

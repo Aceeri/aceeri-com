@@ -2,6 +2,9 @@ extern crate iron;
 extern crate router;
 extern crate mount;
 extern crate staticfile;
+extern crate regex;
+
+use regex::Regex;
 
 use std::path::Path;
 use std::fs::File;
@@ -19,11 +22,14 @@ use mount::Mount;
 use staticfile::Static;
 
 fn main() {
-  let mut ip = "".to_string();
+  let mut content = "".to_string();
   let mut file = File::open("../host.txt").unwrap();
-  file.read_to_string(&mut ip);
+  file.read_to_string(&mut content);
 
-  let host: &str = &ip;
+  let re = Regex::new(r"(.+):(\d+)").unwrap();
+  let captures = re.captures(&content).unwrap();
+
+  let host = captures.at(0).unwrap();
   println!("HOST: {:?}", host);
 
   let mut router = Router::new();
