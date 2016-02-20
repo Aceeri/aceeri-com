@@ -58,6 +58,7 @@ a {
   height: inherit;
   line-height: 2em;
   vertical-align: middle;
+  text-align: right;
 }
 
 #nav li.current a {
