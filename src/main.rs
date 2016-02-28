@@ -26,7 +26,7 @@ fn main() {
     Ok(content) => content,
     Err(err) => {
       println!("ERR: {:?}", err);
-      "localhost:3000".to_owned()
+      "127.0.0.1:3000".to_owned()
     }
   };
   println!("HOST: {:?}", host);
