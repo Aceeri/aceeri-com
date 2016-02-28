@@ -52,6 +52,10 @@ a {
   line-height: 2em;
   vertical-align: middle;
   text-align: center;
+  -webkit-transition: color .25s;
+  -moz-transition: color .25s;
+  -o-transition: color .25s;
+  -ms-transition: color .25s;
   transition: color .25s;
 }
 
@@ -62,6 +66,10 @@ a {
   background: #888;
   border: 0px;
   width: 0px;
+  -webkit-transition: width .25s, background .25s;
+  -moz-transition: width .25s, background .25s;
+  -o-transition: width .25s, background .25s;
+  -ms-transition: width .25s, background .25s;
   transition: width .25s, background .25s;
 }
 
