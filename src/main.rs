@@ -14,7 +14,7 @@ use iron::prelude::*;
 //use iron::status;
 //use iron::middleware::Handler;
 
-use router::Router;
+//use router::Router;
 //use router::Params;
 
 use mount::Mount;
@@ -23,9 +23,7 @@ use staticfile::Static;
 
 fn main() {
   let host = match get_host("../host.txt") {
-    Ok(content) => {
-      content
-    },
+    Ok(content) => content,
     Err(err) => {
       println!("ERR: {:?}", err);
       "localhost:3000".to_owned()
@@ -33,7 +31,7 @@ fn main() {
   };
   println!("HOST: {:?}", host);
 
-  let mut router = Router::new();
+  //let mut router = Router::new();
 
   let mut mount = Mount::new();
   mount
@@ -41,19 +39,15 @@ fn main() {
     .mount("/c/", Static::new(Path::new("res/")));
    // .mount("/p/", Static::new(Path::new("pages/"))); // templated pages with project here
 
-  let ip: &str = &host;
+  let ip: &str = &host; // cannot pass coerced type with bounds
   Iron::new(mount).http(&ip).unwrap();
-}
-
-fn load() {
-
 }
 
 fn get_host(path: &'static str) -> Result<String, String> {
   let mut file = try!(File::open(path).map_err(|err| err.to_string()));
 
   let mut content = "".to_owned();
-  file.read_to_string(&mut content);
+  file.read_to_string(&mut content).ok().unwrap();
 
   let re = Regex::new(r"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?):[0-9][0-9]?[0-9]?[0-9]?[0-9]?").unwrap();
   let captures = re.captures(&content);
