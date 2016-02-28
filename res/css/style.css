@@ -1,5 +1,4 @@
 body {
-  background-image: url(http://i.imgur.com/Cg8gOa0.png);
   font-family: 'Roboto Mono';
   color: #FFFFFF;
   background-color: #FAFAFA;
@@ -23,7 +22,6 @@ a {
   position: fixed;
   overflow: hidden;
   background-color: #404040;
-  //background-image: url(http://i.imgur.com/zCUmNQx.png);
   border-bottom: solid 1px #343F48;
   height: 100%;
   margin: 0em auto;
