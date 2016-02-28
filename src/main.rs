@@ -55,15 +55,11 @@ fn get_host(path: &'static str) -> Result<String, String> {
   let mut content = "".to_owned();
   file.read_to_string(&mut content);
 
-  let re = try!(Regex::new(r"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?):[0-9][0-9]?[0-9]?[0-9]?[0-9]?").map_err(|err| err.to_string()));
+  let re = Regex::new(r"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?):[0-9][0-9]?[0-9]?[0-9]?[0-9]?").unwrap();
   let captures = re.captures(&content);
 
-  match captures {
-    Some(captured) => {
-      return Ok(captured.at(0).unwrap().to_owned())
-    },
-    None => { }
+  return match captures {
+    Some(list) => Ok(list.at(0).unwrap().to_owned()),
+    None => Err("IP string could not be found".to_owned())
   };
-
-  return Err("IP string could not be found".to_owned());
 }
