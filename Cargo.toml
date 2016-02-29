@@ -1,12 +1,14 @@
 [package]
-name = "aceeri-backend"
+name = "backend"
 version = "0.1.0"
 authors = ["Aceeri <conmcclusk@gmail.com>"]
 
 [dependencies]
 regex = "0.1.51"
 iron = "0.2.6"
-handlebars-iron = "0.11.1"
+handlebars = { path = "../handlebars-rust" }
+serde = "0.7.0"
+serde_json = "0.7.0"
 staticfile = "0.1.0"
 router = "0.1.0"
 mount = { git = "https://github.com/iron/mount.git" }

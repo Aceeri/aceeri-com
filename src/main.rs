@@ -1,25 +1,25 @@
+
+extern crate backend;
+
 extern crate iron;
-extern crate router;
+extern crate handlebars;
 extern crate mount;
 extern crate staticfile;
 extern crate regex;
 
 use regex::Regex;
 
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::fs::File;
 use std::io::Read;
 
 use iron::prelude::*;
-//use iron::status;
-//use iron::middleware::Handler;
-
-//use router::Router;
-//use router::Params;
-
 use mount::Mount;
-
 use staticfile::Static;
+use handlebars::Handlebars;
+
+use backend::post::Post;
+use backend::data::Data;
 
 fn main() {
   let host = match get_host("../host.txt") {
@@ -31,13 +31,22 @@ fn main() {
   };
   println!("HOST: {:?}", host);
 
-  //let mut router = Router::new();
+  let mut handlebars = Handlebars::new();
+  let mut data = Data::from("data".to_owned()).value.unwrap();
+  println!("DATA: {:?}", data);
+
+  //let data = Post::data(Post::from_dir(PathBuf::from("data/")));
+  //println!("POSTS: {:?}", data);
+
+  handlebars.register_template_file("index", &Path::new("templates/index.hbs")).ok().unwrap();
+  let index = handlebars.render("index", &data.as_object().unwrap());
+  println!("INDEX: {:?}", index);
 
   let mut mount = Mount::new();
   mount
     .mount("/", Static::new(Path::new("pages/")))
-    .mount("/c/", Static::new(Path::new("res/")));
-   // .mount("/p/", Static::new(Path::new("pages/"))); // templated pages with project here
+    .mount("/c/", Static::new(Path::new("res/")))
+    .mount("/p/", Static::new(Path::new("rendered/posts/")));
 
   let ip: &str = &host; // cannot pass coerced type with bounds
   Iron::new(mount).http(&ip).unwrap();
