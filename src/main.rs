@@ -6,6 +6,10 @@ extern crate handlebars;
 extern crate mount;
 extern crate staticfile;
 extern crate regex;
+extern crate serde;
+extern crate serde_json;
+
+use serde_json::value::Value;
 
 use regex::Regex;
 
@@ -16,10 +20,10 @@ use std::io::Read;
 use iron::prelude::*;
 use mount::Mount;
 use staticfile::Static;
-use handlebars::Handlebars;
 
-use backend::post::Post;
+//use backend::post::Post;
 use backend::data::Data;
+use backend::render::Render;
 
 fn main() {
   let host = match get_host("../host.txt") {
@@ -31,22 +35,17 @@ fn main() {
   };
   println!("HOST: {:?}", host);
 
-  let mut handlebars = Handlebars::new();
-  let mut data = Data::from("data".to_owned()).value.unwrap();
-  println!("DATA: {:?}", data);
+  let data = Data::from_dir("data".to_owned());
 
-  //let data = Post::data(Post::from_dir(PathBuf::from("data/")));
-  //println!("POSTS: {:?}", data);
-
-  handlebars.register_template_file("index", &Path::new("templates/index.hbs")).ok().unwrap();
-  let index = handlebars.render("index", &data.as_object().unwrap());
-  println!("INDEX: {:?}", index);
+  let mut render = Render::new(data);
+  render.render("templates/".to_owned());
+  render.render("data/".to_owned());
 
   let mut mount = Mount::new();
   mount
-    .mount("/", Static::new(Path::new("pages/")))
+    .mount("/", Static::new(Path::new("rendered/sidebar")))
     .mount("/c/", Static::new(Path::new("res/")))
-    .mount("/p/", Static::new(Path::new("rendered/posts/")));
+    .mount("/p/", Static::new(Path::new("rendered/posts")));
 
   let ip: &str = &host; // cannot pass coerced type with bounds
   Iron::new(mount).http(&ip).unwrap();

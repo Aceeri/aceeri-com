@@ -1,4 +1,4 @@
-extern crate regex;
+/*extern crate regex;
 extern crate serde;
 extern crate serde_json;
 
@@ -68,4 +68,4 @@ impl Post {
 
 		result
 	}
-}
+}*/

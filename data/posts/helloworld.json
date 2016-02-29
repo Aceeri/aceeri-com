@@ -1,0 +1,4 @@
+"template" : "templates/sidebar.hbs",
+"title" : "Hello World!",
+"date" : "2/29/2016",
+"content" : "<p>First post on my website, just got the rendering finished</p>"

@@ -4,7 +4,7 @@ extern crate serde_json;
 use std::fs::{self, File, ReadDir, DirEntry};
 use std::io::Read;
 use std::collections::BTreeMap;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use self::serde_json::value::{self, Value};
 
@@ -14,10 +14,16 @@ pub struct Data {
 }
 
 impl Data {
-	pub fn from(path: String) -> Data {
-		let mut data_str = Data::dir_string(path);
+	pub fn from_file(path: String) -> Data {
+		let data_str = "{".to_owned() + &Data::get_string(path) + "}";
 
-		println!("DATA: {:?}", data_str);
+		Data {
+			value: serde_json::from_str(&data_str)
+		}
+	}
+
+	pub fn from_dir(path: String) -> Data {
+		let mut data_str = Data::dir_string(path);
 
 		Data {
 			value: serde_json::from_str(&data_str)
@@ -35,7 +41,7 @@ impl Data {
 
 				let meta = fs::metadata(&entry_path).unwrap();
 				
-				let name = entry.file_name().to_owned().into_string().unwrap();
+				let name = Path::new(&entry_path).file_stem().unwrap().to_str().unwrap();//entry.file_name().to_owned().into_string().unwrap();
 
 				if index > 0 {
 					result = result + ",";

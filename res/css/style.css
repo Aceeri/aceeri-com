@@ -7,7 +7,7 @@ body {
 
 a {
   text-decoration: none;
-  color: #FFFFFF;
+  color: #444;
 }
 
 #sidebar #icon {
@@ -93,7 +93,7 @@ main {
   margin: 0em auto 0em 12em;
   max-width: calc(100% - 12em);
   padding: 1em;
-  color: #424F5A;
+  color: #444;
 }
 
 main h2 {
