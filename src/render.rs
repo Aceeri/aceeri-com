@@ -21,8 +21,10 @@ pub struct Render {
 
 impl Render {
   pub fn new(data: Data) -> Render {
+    let handlebars = Handlebars::new();
+
     Render {
-      handlebars: Handlebars::new(),
+      handlebars: handlebars,
       data: data.value.unwrap(),
       out: PathBuf::from("rendered/")
     }
@@ -44,46 +46,54 @@ impl Render {
         if meta.is_file() {
           match Data::from_file(string_path).value {
             Ok(file) => {
-              let template = file.as_object().unwrap().get("template").unwrap().as_string().unwrap();
+              match file.as_object().unwrap().get("template") {
+                Some(temp) => {
+                  let template = temp.as_string().unwrap();
 
-              if self.handlebars.get_template(template) == None {
-                self.handlebars.register_template_file(template, &Path::new(template)).ok().unwrap();
-              }
+                  if self.handlebars.get_template(template) == None {
+                    self.handlebars.register_template_file(template, &Path::new(template)).ok().unwrap();
+                  }
 
-              let mut writer_path = PathBuf::new();
-              writer_path.push(self.out.as_path());
+                  let mut writer_path = PathBuf::new();
+                  writer_path.push(self.out.as_path());
 
-              let mut result = PathBuf::new();
-              for (index, component) in entry_path.iter().enumerate() {
-                if index > 0 {
-                  result.push(component);
+                  let mut result = PathBuf::new();
+                  for (index, component) in entry_path.iter().enumerate() {
+                    if index > 0 {
+                      result.push(component);
+                    }
+                  }
+
+                  writer_path.push(result);
+                  writer_path.set_extension("html");
+
+                  let mut writer_dir = writer_path.clone();
+                  writer_dir.pop();
+
+                  DirBuilder::new().recursive(true).create(writer_dir);
+
+                  let mut writer = File::create(&writer_path).unwrap();
+                  let context = Context::wraps(&self.data);
+
+                  let combined = Data::combine(&file.as_object().unwrap(), &self.data.as_object().unwrap());
+
+                  let mut page = self.handlebars.render(template, &combined).unwrap();
+
+                  let relt = Regex::new(r"&lt;").unwrap();
+                  let regt = Regex::new(r"&gt;").unwrap();
+
+                  page = relt.replace_all(&page, "<");
+                  page = regt.replace_all(&page, ">");
+
+                  let template_name = &writer_path.into_os_string().into_string().unwrap();
+
+                  self.handlebars.register_template_string(template_name, page).ok().unwrap();
+                  self.handlebars.renderw(template_name, &context, &mut writer);
+                }
+                None => {
+                  println!("NO TEMPLATE");
                 }
               }
-              writer_path.push(result);
-              writer_path.set_extension("html");
-
-              let mut writer_dir = writer_path.clone();
-              writer_dir.pop();
-
-              DirBuilder::new().recursive(true).create(writer_dir);
-
-              let mut writer = File::create(&writer_path).unwrap();
-              let context = Context::wraps(&self.data);
-
-              let mut page = self.handlebars.render(template, &file).unwrap();
-
-              let relt = Regex::new(r"&lt;").unwrap();
-              let regt = Regex::new(r"&gt;").unwrap();
-
-
-              page = relt.replace_all(&page, "<");
-              page = regt.replace_all(&page, ">");
-
-              let template_name = &writer_path.into_os_string().into_string().unwrap();
-
-              self.handlebars.register_template_string(template_name, page).ok().unwrap();
-              self.handlebars.renderw(template_name, &context, &mut writer);
-
             },
             Err(err) => {
               println!("ERR: {:?}", err);

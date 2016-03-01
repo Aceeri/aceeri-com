@@ -12,8 +12,9 @@
     <div id="sidebar">
       <img id="icon" src="/c/img/Icon-compressed.png" />
       <ul id="nav">
-        <li class=""><a href="/">Posts<hr /></a></li>
-        <li class=""><a href="/projects.html">Projects<hr /></a></li>
+        {{#each sidebutton}}
+          <li {{#compare ../../current this}}class="current"{{/compare}}><a href={{this}}>{{@key}}<hr /></a></li>
+        {{/each}}
       </ul>
     </div>
     

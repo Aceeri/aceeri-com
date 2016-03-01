@@ -41,7 +41,7 @@ impl Data {
 
 				let meta = fs::metadata(&entry_path).unwrap();
 				
-				let name = Path::new(&entry_path).file_stem().unwrap().to_str().unwrap();//entry.file_name().to_owned().into_string().unwrap();
+				let name = Path::new(&entry_path).file_stem().unwrap().to_str().unwrap();
 
 				if index > 0 {
 					result = result + ",";
@@ -69,5 +69,19 @@ impl Data {
 		let mut reader = File::open(path).unwrap();
 		reader.read_to_string(&mut buffer).unwrap();
 		buffer
+	}
+
+	pub fn combine(v1: &BTreeMap<String, Value>, v2: &BTreeMap<String, Value>) -> BTreeMap<String, Value> {
+		let mut map = BTreeMap::new();
+
+		for (k, v) in v1.iter() {
+			map.insert(k.clone().to_owned(), v.clone());
+		}
+
+		for (k, v) in v2.iter() {
+			map.insert(k.clone().to_owned(), v.clone());
+		}
+		
+		map
 	}
 }

@@ -1,4 +1,5 @@
 "template" : "templates/sidebar.hbs",
+"current" : "/",
 "title" : "Hello World!",
 "date" : "2/29/2016",
-"content" : "<p>First post on my website, just got the rendering finished</p>"
+"content" : "<p>Finally got this damn templating to work</p>"

@@ -8,6 +8,16 @@ body {
 a {
   text-decoration: none;
   color: #444;
+  -webkit-transition: color .25s ease-out;
+  -moz-transition: color .25s ease-out;
+  -o-transition: color .25s ease-out;
+  -ms-transition: color .25s ease-out;
+  transition: color .25s ease-out;
+  outline: none;
+}
+
+a:hover {
+  color: #FF9500;
 }
 
 #sidebar #icon {
@@ -43,18 +53,13 @@ a {
 }
 
 #nav li a {
-  color: #AAAAAA;
+  color: #AAA;
   width: 12em;
   display: inline-block;
   height: inherit;
   line-height: 2em;
   vertical-align: middle;
   text-align: center;
-  -webkit-transition: color .25s;
-  -moz-transition: color .25s;
-  -o-transition: color .25s;
-  -ms-transition: color .25s;
-  transition: color .25s;
 }
 
 #nav li a hr {

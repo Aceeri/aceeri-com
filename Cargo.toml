@@ -3,15 +3,15 @@ name = "backend"
 version = "0.1.0"
 authors = ["Aceeri <conmcclusk@gmail.com>"]
 
+[[bin]]
+name="backendtest"
+
 [dependencies]
 regex = "0.1.51"
 iron = "0.2.6"
-serde = "0.6.0"
-serde_json = "0.6.0"
+handlebars = { path = "../handlebars-rust" }
+serde = "0.7.0"
+serde_json = "0.7.0"
 staticfile = "0.1.0"
 router = "0.1.0"
 mount = { git = "https://github.com/iron/mount.git" }
-
-[dependencies.handlebars]
-version = "0.14.0"
-features = ["serde_type"]

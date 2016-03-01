@@ -21,7 +21,6 @@ use iron::prelude::*;
 use mount::Mount;
 use staticfile::Static;
 
-//use backend::post::Post;
 use backend::data::Data;
 use backend::render::Render;
 
