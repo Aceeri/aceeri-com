@@ -3,10 +3,16 @@
   <head>
     <title>{{title}}</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    <meta name="description" content="Personal website of Aceeri">
-    <meta name="keywords" content="aceeri,programming,rust,blog,projects">
+    <meta name="description" content="{{#if description}}{{description}}{{else}}Portfolio, blog, projects, games by Aceeri{{/if}}">
+    <meta name="keywords" content="aceeri,programming,rust,blog,projects{{#if keys}}{{#each keys}},{{this}}{{/each}}{{/if}}">
     <link href='/c/css/roboto.css' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="/c/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/c/css/main.css">
+    {{#if link}}
+      {{#each link}}
+        {{this}}
+      {{/each}}
+    {{/if}}
   </head>
   <body>
     <div id="sidebar">

@@ -51,7 +51,14 @@ impl Render {
                   let template = temp.as_string().unwrap();
 
                   if self.handlebars.get_template(template) == None {
-                    self.handlebars.register_template_file(template, &Path::new(template)).ok().unwrap();
+                    match self.handlebars.register_template_file(template, &Path::new(template)) {
+                      Err(err) => {
+                        println!("Failed to register template");
+                        println!("ERR: {:?}", err);
+                        continue;
+                      },
+                      _ => { }
+                    }
                   }
 
                   let mut writer_path = PathBuf::new();
@@ -77,7 +84,14 @@ impl Render {
 
                   let combined = Data::combine(&file.as_object().unwrap(), &self.data.as_object().unwrap());
 
-                  let mut page = self.handlebars.render(template, &combined).unwrap();
+                  let mut page = match self.handlebars.render(template, &combined) {
+                    Ok(p) => p,
+                    Err(err) => {
+                      println!("Failed to render page");
+                      println!("ERR: {:?}", err.desc);
+                      continue;
+                    },
+                  };
 
                   let relt = Regex::new(r"&lt;").unwrap();
                   let regt = Regex::new(r"&gt;").unwrap();

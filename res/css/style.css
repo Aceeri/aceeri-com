@@ -76,6 +76,10 @@ a:hover {
   transition: width .25s, background .25s;
 }
 
+#nav li.current a hr {
+  width: 6em;
+}
+
 #nav li a:hover {
   color: #DDD;
 }
@@ -85,29 +89,10 @@ a:hover {
   background: #DDD;
 }
 
-#nav li.current a hr {
-  width: 6em;
+#nav li a:active {
+  color: #AAA;
 }
 
-main {
-  position: relative;
-  overflow: hidden;
-  border: solid #DDDDDD;
-  border-width: 0px 1px;
-  height: 100%;
-  margin: 0em auto 0em 12em;
-  max-width: calc(100% - 12em);
-  padding: 1em;
-  color: #444;
-}
-
-main h2 {
-  color: #FF9500;
-  font-weight: 200;
-  width: 250px;
-  margin: 0em;
-}
-
-p {
-  margin: 0.5em 0em;
+#nav li a:active hr {
+  background: #888;
 }
