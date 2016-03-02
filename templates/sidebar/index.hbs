@@ -1,11 +1,11 @@
 "template" : "templates/sidebar.hbs",
 "current" : "/",
 "title" : "Index",
-"content" : "<ul>
+"content" : "<ul class=posts>
 	{{#each posts}}
 		<li>
       <div class=date>{{this.date}}</div>
-      <a class=post href=p/{{@key~}}.html>{{this.title}}</a>
+      <a href=p/{{@key~}}.html>{{this.title}}</a>
     </li>
 	{{/each~}}
 </ul>"
