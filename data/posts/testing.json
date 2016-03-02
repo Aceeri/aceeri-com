@@ -1,0 +1,52 @@
+"template" : "templates/sidebar.hbs",
+"current" : "/",
+"title" : "Testing styles",
+"date" : "3/1/2016",
+"content" : "
+<p>Paragraph</p>
+<h1>Header1</h1>
+<h2>Header2</h2>
+<h3>Header3</h3>
+<h4>Header4</h4>
+<h5>Header5</h5>
+<h6>Header6</h6>
+<span>Span</span>
+<div>Div</div>
+<pre><code>fn main() {
+  println!(\"Hello world!\");
+}</code></pre>
+<ul>
+<li>Unordered List 1</li>
+<li>Unordered List 2</li>
+<li>Unordered List 3</li>
+</ul>
+<ol>
+<li>Ordered List 1</li>
+<li>Ordered List 2</li>
+<li>Ordered List 3</li>
+</ol>
+<img src=/c/img/Icon-compressed.png>
+<div class=caption>Caption</div>
+<table>
+  <tr>
+    <th>Column 1</th>
+    <th>Column 2</th>
+    <th>Column 3</th>
+  </tr>
+  <tr>
+    <td>Item 1-1</td>
+    <td>Item 2-1</td>
+    <td>Item 3-1</td>
+  </tr>
+  <tr>
+    <td>Item 1-2</td>
+    <td>Item 2-2</td>
+    <td>Item 3-2</td>
+  </tr>
+  <tr>
+    <td>Item 1-3</td>
+    <td>Item 2-3</td>
+    <td>Item 3-3</td>
+  </tr>
+</table>
+"
