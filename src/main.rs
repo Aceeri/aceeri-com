@@ -54,7 +54,7 @@ fn main() {
 
   let mut chain = Chain::new(mount);
   chain.link_after(|_: &mut Request, mut res: Response| {
-    res.headers.set(CacheControl(vec![CacheDirective::MaxAge(14400u32)]));
+    //res.headers.set(CacheControl(vec![CacheDirective::MaxAge(14400u32)]));
     Ok(res)
   });
 
