@@ -2,24 +2,30 @@
 extern crate backend;
 
 extern crate iron;
+extern crate hyper;
 extern crate handlebars;
 extern crate mount;
+extern crate router;
 extern crate staticfile;
 extern crate regex;
 extern crate serde;
 extern crate serde_json;
 
-use serde_json::value::Value;
-
-use regex::Regex;
-
 use std::path::{Path, PathBuf};
 use std::fs::File;
 use std::io::Read;
+use std::net::IpAddr;
+use std::collections::HashSet;
 
-use iron::prelude::*;
+use hyper::header::{Headers, CacheControl, CacheDirective};
+use iron::{Iron, Handler, Response, Request, IronResult, IronError, Url, status};
+use iron::middleware::Chain;
 use mount::Mount;
+use router::Router;
 use staticfile::Static;
+
+use serde_json::value::Value;
+use regex::Regex;
 
 use backend::data::Data;
 use backend::render::Render;
@@ -46,8 +52,14 @@ fn main() {
     .mount("/c/", Static::new(Path::new("res/")))
     .mount("/p/", Static::new(Path::new("rendered/posts")));
 
+  let mut chain = Chain::new(mount);
+  chain.link_after(|_: &mut Request, mut res: Response| {
+    res.headers.set(CacheControl(vec![CacheDirective::MaxAge(14400u32)]));
+    Ok(res)
+  });
+
   let ip: &str = &host; // cannot pass coerced type with bounds
-  Iron::new(mount).http(&ip).unwrap();
+  Iron::new(chain).http(&ip).unwrap();
 }
 
 fn get_host(path: &'static str) -> Result<String, String> {
